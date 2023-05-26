@@ -31,8 +31,8 @@ CREATE TABLE IF NOT EXISTS answers (
 
 CREATE TABLE IF NOT EXISTS photos (
  id SERIAL PRIMARY KEY,
- url TEXT NOT NULL,
- answer_id INTEGER NOT NULL
- FOREIGN KEY (answer_id) REFERENCES answers(id)
+ answer_id INTEGER NOT NULL,
+ url TEXT NOT NULL
+--  FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
 

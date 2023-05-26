@@ -2,7 +2,7 @@ const fs = require('fs');
 const fastcsv = require('fast-csv');
 const { Pool } = require('pg');
 
-const pool = new Pool({
+const db = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'sdc',
