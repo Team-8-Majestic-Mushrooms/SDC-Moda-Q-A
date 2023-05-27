@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS answers (
 CREATE TABLE IF NOT EXISTS photos (
  id SERIAL PRIMARY KEY,
  answer_id INTEGER NOT NULL,
- url TEXT NOT NULL
+ url TEXT 
 --  FOREIGN KEY (answer_id) REFERENCES answers(id)
 );
 

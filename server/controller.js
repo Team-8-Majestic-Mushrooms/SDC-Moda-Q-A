@@ -2,25 +2,87 @@ const model = require('./model.js');
 
 module.exports = {
   getQuestions: (req, res) => {
-    model.getQuestions(req.query.product_id)
-      .then(res => res.status(200).send({ results: res.rows }))
-      .catch(err => res.status(500).send(err));
+    const { product_id } = req.query;
+    console.log('req.query', req.query);
+    model.getQuestions(product_id)
+      .then((result) => {
+        res.json(result.rows);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
   },
 
-  addQuestion: (req, res) => { },
+  addQuestion: (req, res) => {
+    const questionData = req.body;
+    model.addQuestion(questionData)
+      .then((result) => {
+        res.json({ questionId: result.rows[0].id });
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
 
-  getAnswers: (req, res) => { },
+  getAnswers: (req, res) => {
+    const { questionId } = req.params;
+    model.getAnswers(questionId)
+      .then((result) => {
+        res.json(result.rows);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
 
-  addAnswer: (req, res) => { },
+  addAnswer: (req, res) => {
+    const answerData = req.body;
+    model.addAnswer(answerData)
+      .then((result) => {
+        res.json({ answerId: result.rows[0].id });
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
 
   questionHelpful: (req, res) => {
-    model.questionHelpful(req.query.id)
-      .then(res => res.status(200).send('Thank you!'))
-      .catch(err => res.status(500).send(err));
+    const { questionId } = req.params;
+    model.questionHelpful(questionId)
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
   },
 
-  answerHelpful: (req, res) => { },
+  answerHelpful: (req, res) => {
+    const { answerId } = req.params;
+    model.answerHelpful(answerId)
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
 
-  reportAnswer: (req, res) => { },
-
-}
+  reportAnswer: (req, res) => {
+    const { answerId } = req.params;
+    model.reportAnswer(answerId)
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
+};
