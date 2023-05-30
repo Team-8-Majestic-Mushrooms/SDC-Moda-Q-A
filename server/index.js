@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const db = require('./db.js')
+// const db = require('./db.js');
 const controller = require('./controller.js');
 
 const app = express();
@@ -16,7 +16,7 @@ app.use(express.json());
 // API Requests
 app.get('/qa/questions', controller.getQuestions);
 app.post('/qa/questions', controller.addQuestion);
-app.get('/qa/questions', controller.getAnswers);
+app.get('/qa/questions/:question_id/answers', controller.getAnswers);
 app.post('/qa/questions/:question_id/answers', controller.addAnswer);
 
 app.put('/qa/questions/helpful', controller.questionHelpful);
