@@ -43,6 +43,7 @@ module.exports = {
 
   addAnswer: (req, res) => {
     const answerData = req.body;
+    console.log('req.body', req.body);
     model.addAnswer(answerData)
       .then((result) => {
         res.json({ answerId: result.rows[0].id });

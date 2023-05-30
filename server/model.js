@@ -89,7 +89,7 @@ module.exports = {
     `;
 
     const result = db.query(finalQueryString);
-    return result.rows;
+    return result;
   },
 
   questionHelpful: (questionId) => {
