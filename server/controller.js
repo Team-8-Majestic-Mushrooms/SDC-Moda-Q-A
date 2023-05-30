@@ -4,6 +4,7 @@ module.exports = {
   getQuestions: (req, res) => {
     const { product_id } = req.query;
     console.log('req.query', req.query);
+
     model.getQuestions(product_id)
       .then((result) => {
         res.json(result.rows);
@@ -16,9 +17,10 @@ module.exports = {
 
   addQuestion: (req, res) => {
     const questionData = req.body;
+
     model.addQuestion(questionData)
-      .then((result) => {
-        res.json({ questionId: result.rows[0].id });
+      .then(() => {
+        res.sendStatus(201);
       })
       .catch((error) => {
         console.error(error);
@@ -27,8 +29,9 @@ module.exports = {
   },
 
   getAnswers: (req, res) => {
-    const { questionId } = req.params;
-    model.getAnswers(questionId)
+    console.log('this is req.query', req.params)
+    const { question_id } = req.params;
+    model.getAnswers(question_id)
       .then((result) => {
         res.json(result.rows);
       })
