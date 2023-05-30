@@ -19,7 +19,7 @@ app.post('/qa/questions', controller.addQuestion);
 app.get('/qa/questions/:question_id/answers', controller.getAnswers);
 app.post('/qa/questions/:question_id/answers', controller.addAnswer);
 
-app.put('/qa/questions/helpful', controller.questionHelpful);
+app.put('/qa/questions/:question_id/helpful', controller.questionHelpful);
 app.put('/qa/answers/:answer_id/helpful', controller.answerHelpful);
 app.put('/qa/answers/:answer_id/report', controller.reportAnswer);
 

@@ -45,8 +45,8 @@ module.exports = {
     const answerData = req.body;
     console.log('req.body', req.body);
     model.addAnswer(answerData)
-      .then((result) => {
-        res.json({ answerId: result.rows[0].id });
+      .then(() => {
+        res.sendStatus(201);
       })
       .catch((error) => {
         console.error(error);
@@ -55,8 +55,9 @@ module.exports = {
   },
 
   questionHelpful: (req, res) => {
-    const { questionId } = req.params;
-    model.questionHelpful(questionId)
+    const { question_id } = req.params;
+    console.log('req.params', req.params);
+    model.questionHelpful(question_id)
       .then(() => {
         res.sendStatus(200);
       })
@@ -67,8 +68,8 @@ module.exports = {
   },
 
   answerHelpful: (req, res) => {
-    const { answerId } = req.params;
-    model.answerHelpful(answerId)
+    const { answer_id } = req.params;
+    model.answerHelpful(answer_id)
       .then(() => {
         res.sendStatus(200);
       })
@@ -79,8 +80,8 @@ module.exports = {
   },
 
   reportAnswer: (req, res) => {
-    const { answerId } = req.params;
-    model.reportAnswer(answerId)
+    const { answer_id } = req.params;
+    model.reportAnswer(answer_id)
       .then(() => {
         res.sendStatus(200);
       })
