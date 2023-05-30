@@ -131,6 +131,12 @@ module.exports = {
     return db.query(queryString);
   },
 
+  reportQuestion: (questionId) => {
+    const queryString = `UPDATE questions SET reported = CASE WHEN reported = 0 THEN 1 ELSE reported END WHERE question_id = ${questionId}
+    `;
+    return db.query(queryString);
+  },
+
   reportAnswer: (answerId) => {
     const queryString = `UPDATE answers SET reported = CASE WHEN reported = 0 THEN 1 ELSE reported END WHERE answer_id = ${answerId}
     `;

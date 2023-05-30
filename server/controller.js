@@ -79,6 +79,18 @@ module.exports = {
       });
   },
 
+  reportQuestion: (req, res) => {
+    const { question_id } = req.params;
+    model.reportQuestion(question_id)
+      .then(() => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      });
+  },
+
   reportAnswer: (req, res) => {
     const { answer_id } = req.params;
     model.reportAnswer(answer_id)
