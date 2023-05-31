@@ -29,7 +29,7 @@ module.exports = {
   },
 
   getAnswers: (req, res) => {
-    console.log('this is req.query', req.params)
+    // console.log('this is req.query', req.params);
     const { question_id } = req.params;
     model.getAnswers(question_id)
       .then((result) => {
@@ -42,8 +42,10 @@ module.exports = {
   },
 
   addAnswer: (req, res) => {
+    const { question_id } = req.params;
     const answerData = req.body;
-    console.log('req.body', req.body);
+    answerData.question_id = question_id;
+    // console.log('req.body', req.body);
     model.addAnswer(answerData)
       .then(() => {
         res.sendStatus(201);

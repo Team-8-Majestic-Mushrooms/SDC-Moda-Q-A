@@ -13,24 +13,30 @@ module.exports = {
       q.asker_email,
       q.reported,
       q.question_helpfulness,
-      json_agg(
-        CASE
-          WHEN p.url IS NOT NULL THEN p.url
-          ELSE NULL
-        END
-      ) FILTER (WHERE p.url IS NOT NULL) AS photos
-    FROM
-      questions q
-    LEFT JOIN
-      answers a ON q.question_id = a.question_id
-    LEFT JOIN
-      photos p ON a.answer_id = p.answer_id
-    WHERE
-      q.product_id = ${productId} AND q.reported = 0
+      (
+        SELECT json_agg(
+          json_build_object(
+            'id', a.answer_id,
+            'body', a.body,
+            'date', to_timestamp(a.answer_date / 1000),
+            'answerer_name', a.answerer_name,
+            'helpfulness', a.helpfulness,
+            'photos', (
+              SELECT json_agg(p.url)
+              FROM photos p
+              WHERE p.answer_id = a.answer_id
+            )
+          )
+        )
+        FROM answers a
+        WHERE a.question_id = q.question_id
+      ) AS answers
+    FROM questions q
+    WHERE q.product_id = ${productId} AND q.reported = 0
     GROUP BY
       q.question_id;
   `;
-  return db.query(queryString);
+    return db.query(queryString);
   },
 
   addQuestion: (questionData) => {
@@ -77,7 +83,7 @@ module.exports = {
       answers.reported,
       answers.helpfulness;
   `;
-  return db.query(queryString);
+    return db.query(queryString);
   },
 
   addAnswer: async (data) => {
